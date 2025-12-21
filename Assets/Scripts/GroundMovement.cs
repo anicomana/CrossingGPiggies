@@ -8,6 +8,8 @@ public class GroundMovement : MonoBehaviour
     //to read variables from
     PlayerController playerController;
     GameObject player;
+    SectionSpawnManager sectionSpawnManager;
+    GameObject sectionSpawnManagerObject;
 
     //where to listen events from
     GroundManager groundManager;
@@ -21,6 +23,7 @@ public class GroundMovement : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         groundManagerObject = GameObject.Find("_GroundManager");
+        sectionSpawnManagerObject = GameObject.Find("_SectionSpawnManager");
     }
 
     void Start()
@@ -36,6 +39,10 @@ public class GroundMovement : MonoBehaviour
             groundManager = groundManagerObject.GetComponent<GroundManager>();
             groundManager.OnMovedForward += MoveForward; //subscribes to event by groundManager
             groundManager.OnMovedBackward += MoveBackward; //subscribes to event by groundManager
+        }
+
+        if (sectionSpawnManagerObject != null) {
+            sectionSpawnManager = sectionSpawnManagerObject.GetComponent<SectionSpawnManager>();
         }
     }
 
@@ -53,7 +60,9 @@ public class GroundMovement : MonoBehaviour
             return;
         }
 
-        //if transform.position.z <= sectionSpawnManager.outBound
+        if (transform.position.z < sectionSpawnManager.outBoundBottom){
+            Destroy(gameObject);
+        }
     }
 
     //when event is announced, calls Move method with input "type" Direction "value" Forward or Backward

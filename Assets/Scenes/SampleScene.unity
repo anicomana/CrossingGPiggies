@@ -669,9 +669,9 @@ MonoBehaviour:
   - {fileID: 3431690690620899009, guid: 8f8ed8630a5cc4340825e5f2698bab5c, type: 3}
   - {fileID: 2189618649569888893, guid: acd35c1ea6b1c914b8c3997f231ff0f6, type: 3}
   nInitialSections: 8
-  firstSectionPos: {x: 0, y: 0, z: 6}
-  addSectionValue: {x: 0, y: 0, z: 2}
-  lastSectionSpawnPos: {x: 0, y: 0, z: 0}
+  addSectionDistance: 2
+  outBoundBottom: -8
+  outBoundSide: 12
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +757,7 @@ MonoBehaviour:
   stepSizeXAxis: 2
   moveSpeed: 20
   posThreshold: 0.001
+  playerOutBoundSide: 5
 --- !u!135 &1601102774
 SphereCollider:
   m_ObjectHideFlags: 0

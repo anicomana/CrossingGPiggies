@@ -9,11 +9,14 @@ public class SectionSpawnManager : MonoBehaviour
 
     public GameObject[] sectionToSpawn;
     public int nInitialSections = 5;
-    public Vector3 firstSectionPos = new Vector3(0, 0, 6);
-    public Vector3 addSectionValue = new Vector3(0, 0, 2);
-    public Vector3 outBoundBottom = new Vector3(0, 0, -8);
-    public Vector3 outBoundSide = new Vector3(12, 0, 0);
-    public Vector3 lastSectionSpawnPos;
+    public float addSectionDistance = 2f;
+    public float outBoundBottom = -7f;
+    public float outBoundSide = 12f;
+
+    private Vector3 outBound;
+    private Vector3 firstSectionPos = new Vector3(0, 0, 6);
+    private Vector3 lastSectionSpawnPos;
+
 
     //on awake finds gameobjects in scene
     void Awake()
@@ -34,7 +37,7 @@ public class SectionSpawnManager : MonoBehaviour
 
         //for cycle to spawn next sections nCycles times in lastSectionSpawnPos
         for (int i = 0; i < nInitialSections; i++) {
-            lastSectionSpawnPos += addSectionValue;
+            lastSectionSpawnPos.z += addSectionDistance;
             InstantiateRandomSection();
         }  
     }
