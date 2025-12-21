@@ -8,25 +8,25 @@ public class PlayerController : MonoBehaviour
     public float stepSizeXAxis = 2f;
     public float moveSpeed = 15f;
     public float posThreshold = 0.001f;
+
+    public float playerOutBoundSide = 5f;
     
-    private Vector3 targetPos;
-    private bool moving;
+    private Vector3 playerTargetPos;
+    private bool playerMoving;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        targetPos = transform.position;
+        playerTargetPos = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (moving) {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+        if (playerMoving) {
+            transform.position = Vector3.MoveTowards(transform.position, playerTargetPos, moveSpeed * Time.deltaTime);
             
-            if (Vector3.Distance(transform.position, targetPos) < posThreshold) {
-                transform.position = targetPos;
-                moving = false;
+            if (Vector3.Distance(transform.position, playerTargetPos) < posThreshold) {
+                transform.position = playerTargetPos;
+                playerMoving = false;
             }
             return;
         }
@@ -40,9 +40,14 @@ public class PlayerController : MonoBehaviour
         }
         
         if (dir != Vector3.zero) {
-            targetPos += dir * stepSizeSide;
-            moving = true;
+            playerTargetPos += dir * stepSizeSide;
+            playerMoving = true;
         }
 
+        if (playerTargetPos.x < -playerOutBoundSide) {
+            playerTargetPos = new Vector3(-playerOutBoundSide, playerTargetPos.y, playerTargetPos.z);
+        } else if (playerTargetPos.x > playerOutBoundSide) {
+            playerTargetPos = new Vector3(playerOutBoundSide, playerTargetPos.y, playerTargetPos.z);
+        }
     }
 }

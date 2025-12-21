@@ -2,19 +2,33 @@ using UnityEngine;
 
 public class SectionSpawnManager : MonoBehaviour
 {
-    GroundMovement groundMovement;
+    //where to listen events from
+    GroundManager groundManager;
+    GameObject groundManagerObject;
     
 
     public GameObject[] sectionToSpawn;
     public int nInitialSections = 5;
-
     public Vector3 firstSectionPos = new Vector3(0, 0, 6);
     public Vector3 addSectionValue = new Vector3(0, 0, 2);
+    public Vector3 outBoundBottom = new Vector3(0, 0, -8);
+    public Vector3 outBoundSide = new Vector3(12, 0, 0);
     public Vector3 lastSectionSpawnPos;
+
+    //on awake finds gameobjects in scene
+    void Awake()
+    {
+        groundManagerObject = GameObject.Find("_GroundManager");
+    }
 
     void Start()
     {
-        //groundMovement.OnMoved += InstantiateRandomSection;
+        //if groundManagerObject is not null, then get component and subscribes to groundManager event
+        if (groundManagerObject != null) {
+            groundManager = groundManagerObject.GetComponent<GroundManager>();
+            groundManager.OnMovedForward += InstantiateRandomSection;
+        }
+
         lastSectionSpawnPos = firstSectionPos;
         InstantiateRandomSection();
 
@@ -27,13 +41,14 @@ public class SectionSpawnManager : MonoBehaviour
 
     void Update()
     {
-        //when ground moves, spawn another section in lastSectionPos
+
     }
 
+    //this method is also called when event from groundManager is called, OnMovedForward
     void InstantiateRandomSection()
     {
+        //to instantiate a random section from the list
         int randomSection = Random.Range(0, sectionToSpawn.Length);
         Instantiate(sectionToSpawn[randomSection], lastSectionSpawnPos, Quaternion.identity);
-        Debug.Log("New section spawned in:" +lastSectionSpawnPos);
     }
 }
