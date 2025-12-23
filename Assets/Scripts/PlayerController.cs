@@ -55,4 +55,12 @@ public class PlayerController : MonoBehaviour
             playerTargetPos = new Vector3(playerOutBoundSide, playerTargetPos.y, playerTargetPos.z);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("GameOver");
+        if (other.gameObject.tag == "Enemy") {
+            Debug.Log("GameOver");
+        }
+    }
 }
