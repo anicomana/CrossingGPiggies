@@ -3,13 +3,12 @@ using UnityEngine;
 public class SectionSpawnManager : MonoBehaviour
 {
     //where to listen events from
-    GroundManager groundManager;
-    GameObject groundManagerObject;
-    
+    PlayerController playerController;
+    GameObject player;
 
     public GameObject[] sectionToSpawn;
     public int nInitialSections = 5;
-    public float addSectionDistance = 2f;
+    public float nextSectionDistance = 2f;
     public float outBoundBottom = -7f;
     public float outBoundSide = 12f;
 
@@ -21,15 +20,15 @@ public class SectionSpawnManager : MonoBehaviour
     //on awake finds gameobjects in scene
     void Awake()
     {
-        groundManagerObject = GameObject.Find("_GroundManager");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Start()
     {
         //if groundManagerObject is not null, then get component and subscribes to groundManager event
-        if (groundManagerObject != null) {
-            groundManager = groundManagerObject.GetComponent<GroundManager>();
-            groundManager.OnMovedForward += InstantiateRandomSection;
+        if (player != null) {
+            playerController = player.GetComponent<PlayerController>();
+            playerController.OnNewMaxReached += InstantiateRandomSection;
         }
 
         lastSectionSpawnPos = firstSectionPos;
@@ -37,7 +36,7 @@ public class SectionSpawnManager : MonoBehaviour
 
         //for cycle to spawn next sections nCycles times in lastSectionSpawnPos
         for (int i = 0; i < nInitialSections; i++) {
-            lastSectionSpawnPos.z += addSectionDistance;
+            lastSectionSpawnPos.z += nextSectionDistance;
             InstantiateRandomSection();
         }  
     }
@@ -53,5 +52,6 @@ public class SectionSpawnManager : MonoBehaviour
         //to instantiate a random section from the list
         int randomSection = Random.Range(0, sectionToSpawn.Length);
         Instantiate(sectionToSpawn[randomSection], lastSectionSpawnPos, Quaternion.identity);
+        Debug.Log("New section spawned!");
     }
 }
