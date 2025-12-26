@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class GroundManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GroundManager : MonoBehaviour
     public float nextSectionDistance = 2f;
     public float outBoundBottom = -7f;
     public float outBoundSide = 12f;
+    public float spawnDelay = 0.1f;
 
     private Vector3 outBound;
     private Vector3 firstSectionPos = new Vector3(0, 0, 6);
@@ -31,10 +33,11 @@ public class GroundManager : MonoBehaviour
         //if groundManagerObject is not null, then get component and subscribes to groundManager event
         if (scoreManagerObject != null) {
             scoreManager = scoreManagerObject.GetComponent<ScoreManager>();
-            scoreManager.OnNewMaxReached += InstantiateRandomSection;
+            scoreManager.OnNewMaxReached += SpawnRandomSectionWithDelay;
         }
 
         lastSectionSpawnPos = firstSectionPos;
+
         InstantiateRandomSection();
 
         //for cycle to spawn next sections nCycles times in lastSectionSpawnPos
@@ -53,16 +56,27 @@ public class GroundManager : MonoBehaviour
         } else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) {
             OnMovedBackward?.Invoke();
         }
-
     }
 
     //this method is also called when event from groundManager is called, OnMovedForward
+    void SpawnRandomSectionWithDelay()
+    {
+        //Adds delay on spawning new sections to prevent overlapping
+        StartCoroutine(InstantiateWithDelay());
+    }
+
+    IEnumerator InstantiateWithDelay()
+    {
+        yield return new WaitForSeconds(spawnDelay);
+        InstantiateRandomSection();
+    }
+
     void InstantiateRandomSection()
     {
         //to instantiate a random section from the list
         int randomSection = Random.Range(0, sectionToSpawn.Length);
         Instantiate(sectionToSpawn[randomSection], lastSectionSpawnPos, Quaternion.identity);
         Debug.Log("New section spawned!");
-    }
 
+    }
 }

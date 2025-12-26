@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("GameOver");
         if (other.gameObject.tag == "Enemy") {
             Debug.Log("GameOver");
         }

@@ -11,7 +11,6 @@ public class ScoreManager : MonoBehaviour
     private int currentSection = -2;
     private int maxSectionReached;
     private int scoreGainedPerSection = 1;
-
     void Awake()
     {
         groundManagerObject = GameObject.Find("_GroundManager");
@@ -38,10 +37,16 @@ public class ScoreManager : MonoBehaviour
     {
         currentSection += scoreGainedPerSection;
 
-        if (currentSection > maxSectionReached) {
+        if (currentSection >= maxSectionReached) {
             maxSectionReached = currentSection;
             OnNewMaxReached.Invoke();
+
+            if (maxSectionReached < 0) {
+                maxSectionReached = 0;
+            }
+
             Debug.Log("Current score is:" + maxSectionReached);
+
         }
     }
 
