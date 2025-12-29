@@ -10,22 +10,24 @@ public class GroundManager : MonoBehaviour
     //where to listen events from
     ScoreManager scoreManager;
     GameObject scoreManagerObject;
+    GameObject startingSection;
+
 
     public GameObject[] sectionToSpawn;
-    public GameObject safeSection;
     public int nInitialSections = 20;
     public float nextSectionDistance = 2f;
     public float outBoundBottom = -7f;
     public float spawnDelay = 0.1f;
 
     private Vector3 outBound;
-    private Vector3 firstSectionPos = new Vector3(0, 0, 6);
+    private Vector3 firstSectionPos;
     private Vector3 lastSectionSpawnPos;
 
     //on awake finds gameobjects in scene
     void Awake()
     {
         scoreManagerObject = GameObject.Find("_ScoreManager");
+        startingSection = GameObject.Find("StartingSection");
     }
 
     void Start()
@@ -36,6 +38,7 @@ public class GroundManager : MonoBehaviour
             scoreManager.OnNewMaxReached += SpawnRandomSectionWithDelay;
         }
 
+        firstSectionPos = new Vector3 (startingSection.transform.position.x, startingSection.transform.position.y, startingSection.transform.localScale.z);
         lastSectionSpawnPos = firstSectionPos;
 
         InstantiateRandomSection();
@@ -61,6 +64,7 @@ public class GroundManager : MonoBehaviour
     //this method is also called when event from groundManager is called, OnMovedForward
     void SpawnRandomSectionWithDelay()
     {
+        Debug.Log("SpawnRandomSectionWithDelays");
         //Adds delay on spawning new sections to prevent overlapping
         StartCoroutine(InstantiateWithDelay());
     }

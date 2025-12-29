@@ -8,7 +8,7 @@ public class CameraMovement : MonoBehaviour
     GameObject player;
 
     private Vector3 camTargetPos;
-    private Vector3 camStartingPos;
+    private Vector3 targetStartingPos;
     private bool camMoving;
 
     void Awake ()
@@ -30,21 +30,22 @@ public class CameraMovement : MonoBehaviour
         }
 
         camTargetPos = transform.position;
-        camStartingPos = transform.position;
+        targetStartingPos = transform.position;
     }
 
     void Update()
     {
         //if (!moving) then transform.position.z moves towards targetpos
-        if (camMoving) {
+        if (transform.position != camTargetPos) {
             transform.position = Vector3.MoveTowards(transform.position, camTargetPos, playerController.moveSpeed * Time.deltaTime);
         
                 if (Vector3.Distance(transform.position, camTargetPos) < playerController.posThreshold) {
                     transform.position = camTargetPos;
-                    camMoving = false;
+                    camTargetPos = targetStartingPos;
                 }
             return;
         } 
+
     }
 
     void CamMoveForward()
@@ -75,6 +76,5 @@ public class CameraMovement : MonoBehaviour
 
         //once dir has been determined, we can calculate new groundTargetPos
         camTargetPos += dir * playerController.stepSizeXAxis;
-        camMoving = true;
     }
 }

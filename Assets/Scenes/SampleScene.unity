@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 175590241}
   - component: {fileID: 175590245}
   m_Layer: 0
-  m_Name: Section0
+  m_Name: StartingSection
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,8 +338,8 @@ Transform:
   m_GameObject: {fileID: 175590240}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 12, y: 0.1, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalScale: {x: 12, y: 0.1, z: 12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -905,8 +905,7 @@ MonoBehaviour:
   - {fileID: 658470955505295345, guid: 382b458a1c9f00b4bb44b110c95ec574, type: 3}
   - {fileID: 4658378644802569844, guid: cb174862d080e914c8ff9fc2b35f9dcb, type: 3}
   - {fileID: 4658378644802569844, guid: 098184ca38269ec4da05b54aea5be6b3, type: 3}
-  safeSection: {fileID: 0}
-  nInitialSections: 3
+  nInitialSections: 15
   nextSectionDistance: 2
   outBoundBottom: -7
   spawnDelay: 0.1

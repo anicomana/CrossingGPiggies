@@ -7,17 +7,20 @@ public class ScoreManager : MonoBehaviour
     //where to listen events from
     GroundManager groundManager;
     GameObject groundManagerObject;
+    GameObject startingSection;
 
-    private int currentSection = -2;
-    private int maxSectionReached;
+    private float currentSection;
+    private float maxSectionReached;
     private int scoreGainedPerSection = 1;
     void Awake()
     {
         groundManagerObject = GameObject.Find("_GroundManager");
+        startingSection = GameObject.Find("StartingSection");
     }
 
     void Start()
     {
+        currentSection = -startingSection.transform.position.z;
         maxSectionReached = currentSection;
 
         if(groundManagerObject !=null) {
@@ -35,18 +38,14 @@ public class ScoreManager : MonoBehaviour
     //add points when going forward
     void AddCurrentSection()
     {
+        Debug.Log("AddCurrentSection");
         currentSection += scoreGainedPerSection;
 
-        if (currentSection >= maxSectionReached) {
+        if (currentSection > maxSectionReached) {
             maxSectionReached = currentSection;
             OnNewMaxReached.Invoke();
-
-            if (maxSectionReached < 0) {
-                maxSectionReached = 0;
-            }
-
             Debug.Log("Current score is:" + maxSectionReached);
-
+            Debug.Log("Current section in:" + currentSection);
         }
     }
 
@@ -56,4 +55,4 @@ public class ScoreManager : MonoBehaviour
         currentSection -= scoreGainedPerSection;
     }
 
-}
+}  
