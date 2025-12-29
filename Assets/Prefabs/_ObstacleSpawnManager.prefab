@@ -50,3 +50,9 @@ MonoBehaviour:
   - {fileID: 1118415184105327412, guid: 66bc018268f9e144cb8fb6f973ffd3dc, type: 3}
   spawnDelay: 2
   obstacleSpawnPosX: 7
+  minSpawnDelay: 1
+  maxSpawnDelay: 5
+  outBoundSide: 12
+  minObstacleSpeed: 2
+  maxObstacleSpeed: 4
+  obstacleSpeed: 0

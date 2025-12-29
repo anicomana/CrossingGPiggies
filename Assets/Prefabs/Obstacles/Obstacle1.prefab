@@ -112,7 +112,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1, y: 1.1, z: 1.1}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-1532902414188660586
 MonoBehaviour:
@@ -126,8 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68f4df6f0434da4188345aba1bd1230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleController
-  minObstacleSpeed: 2
-  maxObstacleSpeed: 4
 --- !u!54 &8085122245906877046
 Rigidbody:
   m_ObjectHideFlags: 0

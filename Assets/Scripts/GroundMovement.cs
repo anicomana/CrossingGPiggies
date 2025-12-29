@@ -46,9 +46,11 @@ public class GroundMovement : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, groundTargetPos, playerController.moveSpeed * Time.deltaTime);
 
             //if close enough, snaps to target's position
+            //when section snaps to its target, calls for SpawnNewSectionIfNeeded that checks if a new section should spawn
             if (Vector3.Distance(transform.position, groundTargetPos) < playerController.posThreshold) {
                 transform.position = groundTargetPos;
                 groundMoving = false;
+                groundManager.SpawnNewSectionIfNeeded(); //after the movement is made calls method to spawn if needed
             }
             return;
         }
@@ -62,6 +64,7 @@ public class GroundMovement : MonoBehaviour
     void MoveForward()
     {
         Move(Direction.Forward);
+
     }
 
     void MoveBackward()

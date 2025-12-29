@@ -30,6 +30,7 @@ public class ObstacleSpawnManager : MonoBehaviour
         }
 
         obstacleSpawnPosX *= -dir;
+        InstantiateRandomObstacle();
         StartCoroutine(InstantiateWithDelay());
     }
 
