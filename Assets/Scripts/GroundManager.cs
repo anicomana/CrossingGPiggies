@@ -12,10 +12,8 @@ public class GroundManager : MonoBehaviour
     GameObject scoreManagerObject;
     GameManager gameManager;
     GameObject gameManagerObject;
-    GameObject startingSection;
-
-
     public GameObject[] sectionToSpawn;
+    public GameObject startingBase;
     public int nInitialSections = 20;
     public float nextSectionDistance = 2f;
     public float outBoundBottom = -9f; //referenced in GroundMovement
@@ -31,7 +29,6 @@ public class GroundManager : MonoBehaviour
     {
         scoreManagerObject = GameObject.Find("_ScoreManager");
         gameManagerObject = GameObject.Find("_GameManager");
-        startingSection = GameObject.Find("StartingSection");
     }
 
     void Start()
@@ -48,16 +45,10 @@ public class GroundManager : MonoBehaviour
             gameManager = gameManagerObject.GetComponent<GameManager>();
             gameManager.OnGameOver += GroundGameOver;
         }
-        firstSectionPos = new Vector3 (startingSection.transform.position.x, startingSection.transform.position.y, startingSection.transform.localScale.z);
+        firstSectionPos = new Vector3 (startingBase.transform.position.x, startingBase.transform.position.y, startingBase.transform.localScale.z);
         lastSectionSpawnPos = firstSectionPos;
 
-        InstantiateRandomSection();
-
-        //for cycle to spawn next sections nCycles times in lastSectionSpawnPos
-        for (int i = 0; i < nInitialSections; i++) {
-            lastSectionSpawnPos.z += nextSectionDistance;
-            InstantiateRandomSection();
-        }  
+        SpawnStartingSections();
     }
 
     void Update()
@@ -85,6 +76,11 @@ public class GroundManager : MonoBehaviour
         Instantiate(sectionToSpawn[randomSection], lastSectionSpawnPos, Quaternion.identity);
         shouldSpawn = false;
     }
+
+    void InstantiateStartingBase()
+    {
+        Instantiate(startingBase, startingBase.transform.position, Quaternion.identity);
+    }
     
     //method called when when ground movement is done (from groundMovement)
     public void SpawnNewSectionIfNeeded() {
@@ -96,23 +92,24 @@ public class GroundManager : MonoBehaviour
             InstantiateRandomSection();
         }
     }
-
-    /*void SpawnRandomSectionWithDelay()
+    //to be called when Restart event is invoked
+    void SpawnStartingSections()
     {
-        Debug.Log("SpawnRandomSectionWithDelays");
-        //Adds delay on spawning new sections to prevent overlapping
-        StartCoroutine(InstantiateWithDelay());
-    }
-
-    IEnumerator InstantiateWithDelay()
-    {
-        yield return new WaitForSeconds(spawnDelay);
+        InstantiateStartingBase();
         InstantiateRandomSection();
-    }*/
+
+        //for cycle to spawn next sections nCycles times in lastSectionSpawnPos
+        for (int i = 0; i < nInitialSections; i++) {
+            lastSectionSpawnPos.z += nextSectionDistance;
+            InstantiateRandomSection();
+        }  
+
+    }
 
     //when receiving event it's game over
     void GroundGameOver()
     {
         isGameOver = true;
     }
+
 }

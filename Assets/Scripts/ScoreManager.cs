@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
     GameObject groundManagerObject;
     GameManager gameManager;
     GameObject gameManagerObject;
-    GameObject startingSection;
+    GameObject startingBase;
 
     private float currentSection;
     private float maxSectionReached;
@@ -19,13 +19,12 @@ public class ScoreManager : MonoBehaviour
     {
         groundManagerObject = GameObject.Find("_GroundManager");
         gameManagerObject = GameObject.Find("_GameManager");
-        startingSection = GameObject.Find("StartingSection");
+        startingBase = GameObject.FindGameObjectWithTag("StartingBase");
     }
 
     void Start()
     {
-        currentSection = -startingSection.transform.position.z;
-        maxSectionReached = currentSection;
+        RestartScore();
 
         if (gameManagerObject !=null) {
             gameManager = gameManagerObject.GetComponent<GameManager>();
@@ -62,5 +61,12 @@ public class ScoreManager : MonoBehaviour
     void RemoveCurrentSection()
     {
         currentSection -= scoreGainedPerSection;
+    }
+
+    //to be called when Restart event is Invoked
+    void RestartScore()
+    {
+    currentSection = -startingBase.transform.position.z;
+    maxSectionReached = currentSection;
     }
 }  
