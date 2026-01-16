@@ -12,6 +12,8 @@ public class ScoreManager : MonoBehaviour
     GameManager gameManager;
     GameObject gameManagerObject;
     GameObject startingBase;
+    PlayerController playerController;
+    GameObject playerControllerObject;
 
     private float currentSection;
     private float maxSectionReached;
@@ -24,6 +26,7 @@ public class ScoreManager : MonoBehaviour
         groundManagerObject = GameObject.Find("_GroundManager");
         gameManagerObject = GameObject.Find("_GameManager");
         startingBase = GameObject.FindGameObjectWithTag("StartingBase");
+        playerControllerObject = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Start()
@@ -41,6 +44,11 @@ public class ScoreManager : MonoBehaviour
             groundManager = groundManagerObject.GetComponent<GroundManager>();
             groundManager.OnMovedForward += AddCurrentSection;
             groundManager.OnMovedBackward += RemoveCurrentSection;
+        }
+
+        if (playerControllerObject != null) {
+            playerController = playerControllerObject.GetComponent<PlayerController>();
+            playerController.OnBonusCollision += AddBonusPoints;
         }
     }
 
@@ -92,5 +100,10 @@ public class ScoreManager : MonoBehaviour
     {
         sectionsUntilNextBonus = Random.Range(minSectionsUntilBonus, maxSectionsUntilBonus + 1);
         Debug.Log("Sections until next bonus:" + sectionsUntilNextBonus);
+    }
+
+    void AddBonusPoints()
+    {
+        Debug.Log("BONUS +1");
     }
 }  

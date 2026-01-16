@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     GameManager gameManager;
     GameObject gameManagerObject;
     public event System.Action OnEnemyCollision;
+    public event System.Action OnBonusCollision;
     GameObject player;
 
     public Vector3 playerInitialPos;
@@ -77,8 +78,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy") {
+        switch (other.gameObject.tag) {
+            case "Enemy":
             OnEnemyCollision?.Invoke();
+            break;
+
+            case "Bonus":
+            OnBonusCollision?.Invoke();
+            Debug.Log("Entered collision with bonus");
+            Destroy(other.gameObject);
+            break;
         }
     }
 
