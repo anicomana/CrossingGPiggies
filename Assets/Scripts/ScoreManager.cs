@@ -65,7 +65,7 @@ public class ScoreManager : MonoBehaviour
             sectionsUntilNextBonus--;
             if(sectionsUntilNextBonus <= 0) {
                 ResetSectionsUntilBonus();
-                OnNewBonusReached?.Invoke() ;
+                OnNewBonusReached?.Invoke();
                 Debug.Log("Next bonus reached");
             }
         }

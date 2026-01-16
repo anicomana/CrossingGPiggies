@@ -615,7 +615,8 @@ MonoBehaviour:
   nextSectionDistance: 2
   outBoundBottom: -9
   spawnDelay: 0.1
-  shouldSpawn: 0
+  shouldSectionSpawn: 0
+  shouldBonusSpawn: 0
 --- !u!1001 &352140746249948713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -627,6 +628,10 @@ PrefabInstance:
     - target: {fileID: 1367457596041369393, guid: a6be3f45af4ec6b4c82b6cb17d1832b0, type: 3}
       propertyPath: m_Name
       value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367457596041369393, guid: a6be3f45af4ec6b4c82b6cb17d1832b0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1851542245870980491, guid: a6be3f45af4ec6b4c82b6cb17d1832b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -692,6 +697,10 @@ PrefabInstance:
     - target: {fileID: 1572124071918693284, guid: 7a92c21d0848382438756244c25e0a81, type: 3}
       propertyPath: m_TagString
       value: StartingBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202262371989805679, guid: 7a92c21d0848382438756244c25e0a81, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5202262371989805679, guid: 7a92c21d0848382438756244c25e0a81, type: 3}
       propertyPath: m_LocalScale.z

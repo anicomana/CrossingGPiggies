@@ -12,13 +12,16 @@ public class GroundManager : MonoBehaviour
     GameObject scoreManagerObject;
     GameManager gameManager;
     GameObject gameManagerObject;
+    BonusSpawnManager bonusSpawnManager;
+    GameObject bonusSpawnManagerObject;
     public GameObject[] sectionToSpawn;
     public GameObject startingBase;
     public int nInitialSections = 20;
     public float nextSectionDistance = 2f;
     public float outBoundBottom = -9f; //referenced in GroundMovement
     public float spawnDelay = 0.1f;
-    public bool shouldSpawn = false;
+    public bool shouldSectionSpawn;
+    public bool shouldBonusSpawn;
     private Vector3 firstSectionSpawnPos;
     private Vector3 lastSectionSpawnPos;
     private Vector3 startingBaseInitialPos;
@@ -30,6 +33,7 @@ public class GroundManager : MonoBehaviour
     {
         scoreManagerObject = GameObject.Find("_ScoreManager");
         gameManagerObject = GameObject.Find("_GameManager");
+        bonusSpawnManagerObject = GameObject.Find("_BonusSpawnManager");
     }
 
     void Start()
@@ -38,8 +42,9 @@ public class GroundManager : MonoBehaviour
         if (scoreManagerObject != null) {
             scoreManager = scoreManagerObject.GetComponent<ScoreManager>();
             scoreManager.OnNewMaxReached += () => {
-                shouldSpawn = true; //when new max is reached a new section should spawn
+                shouldSectionSpawn = true; //when new max is reached a new section should spawn
             };
+            scoreManager.OnNewBonusReached += () => {shouldBonusSpawn = true;};
         }
 
         if (gameManagerObject != null) {
@@ -47,7 +52,14 @@ public class GroundManager : MonoBehaviour
             gameManager.OnGameOver += GroundGameOver;
             gameManager.OnGameReset += ResetGroundSpawn;
         }
+
+        if (bonusSpawnManagerObject != null) {
+            bonusSpawnManager = bonusSpawnManagerObject.GetComponentInChildren<BonusSpawnManager>();
+        }
+
         startingBaseInitialPos = startingBase.transform.position;
+        shouldSectionSpawn = false;
+        shouldBonusSpawn = false;
         ResetGroundSpawn();
     }
 
@@ -74,7 +86,8 @@ public class GroundManager : MonoBehaviour
         //to instantiate a random section from the list
         int randomSection = Random.Range(0, sectionToSpawn.Length);
         Instantiate(sectionToSpawn[randomSection], lastSectionSpawnPos, Quaternion.identity);
-        shouldSpawn = false;
+        shouldSectionSpawn = false;
+
     }
 
     //method called when when ground movement is done (from groundMovement)
@@ -83,7 +96,7 @@ public class GroundManager : MonoBehaviour
         isGroundMoving = false; //declares locally that ground is not moving anymore
 
         //checks if a new max section has been reached, if positive then instantiates new section
-        if (shouldSpawn) {
+        if (shouldSectionSpawn) {
             InstantiateRandomSection();
         }
     }

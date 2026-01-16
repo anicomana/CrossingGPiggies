@@ -8,6 +8,11 @@ public class BonusSpawnManager : MonoBehaviour
     GameObject player;
     ScoreManager scoreManager;
     GameObject scoreManagerObject;
+    GameManager gameManager;
+    GameObject gameManagerObject;
+    GroundManager groundManager;
+    GameObject groundManagerObject;
+
     public GameObject bonusToSpawn;
 
     void Awake()
@@ -15,6 +20,9 @@ public class BonusSpawnManager : MonoBehaviour
         //find gameobject
         player = GameObject.FindGameObjectWithTag("Player");
         scoreManagerObject = GameObject.Find("_ScoreManager");
+        gameManagerObject = GameObject.Find("_GameManager");
+        groundManagerObject = GameObject.Find("_GroundManager");
+
     }
 
     void Start()
@@ -26,8 +34,20 @@ public class BonusSpawnManager : MonoBehaviour
 
         if (scoreManagerObject != null) {
             scoreManager = scoreManagerObject.GetComponent<ScoreManager>();
-            scoreManager.OnNewBonusReached += InstantiateRandomBonus;
+            //scoreManager.OnNewBonusReached += InstantiateRandomBonus;
         }
+
+        if (gameManagerObject !=null) {
+            gameManager = gameManagerObject.GetComponent<GameManager>();
+        }
+
+        if (groundManagerObject !=null) {
+            groundManager = groundManagerObject.GetComponent<GroundManager>();
+
+            if (groundManager.shouldBonusSpawn == true) {
+                InstantiateRandomBonus();
+                groundManager.shouldBonusSpawn = false;
+            }        }
     }
 
     void Update()
