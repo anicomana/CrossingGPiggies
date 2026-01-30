@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public event System.Action<int> OnBonusCollision;
     public ParticleSystem waterParticle;
     public ParticleSystem smashParticle;
+    public ParticleSystem bonusParticle;
     public int stepSizeSide = 1;
     public int stepSizeXAxis = 2;
     public float moveSpeed = 15f;
@@ -82,8 +83,8 @@ public class PlayerController : MonoBehaviour
         switch (other.gameObject.tag) {
             case "Enemy":
                 OnEnemyCollision?.Invoke();
-                waterParticle.Stop(); //THIS LINE DOES NOT WORK
-                smashParticle.Play(); //THIS LINE DOEN NOT WORK
+                waterParticle.Stop();
+                smashParticle.Play();
                 break;
 
             case "Bonus":
@@ -95,8 +96,7 @@ public class PlayerController : MonoBehaviour
                     OnBonusCollision?.Invoke(bonusPointsValue);
                 }
 
-                waterParticle.Stop(); //THIS LINE DOES NOT WORK
-                //Particle explosion gold
+                bonusParticle.Play();
                 Destroy(other.gameObject);
                 break;
         }

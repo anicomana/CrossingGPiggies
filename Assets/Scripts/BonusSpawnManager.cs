@@ -46,7 +46,8 @@ public class BonusSpawnManager : MonoBehaviour
             if (groundManager.shouldBonusSpawn == true) {
                 InstantiateRandomBonus();
                 groundManager.shouldBonusSpawn = false;
-            }        }
+            }
+        }
     }
 
     void Update()

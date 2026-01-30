@@ -17,9 +17,8 @@ public class ScoreManager : MonoBehaviour
 
     private float currentSection;
     private float maxSectionReached;
-    private int scoreGainedPerSection = 1;
     private int minSectionsUntilBonus = 5;
-    private int maxSectionsUntilBonus = 15;
+    private int maxSectionsUntilBonus = 10;
     private int sectionsUntilNextBonus;
     private float bonusPoints;
     void Awake()
@@ -63,7 +62,7 @@ public class ScoreManager : MonoBehaviour
     //add points when going forward
     void AddCurrentSection()
     {
-        currentSection += scoreGainedPerSection;
+        currentSection++;
 
         if (currentSection > maxSectionReached) {
             maxSectionReached = currentSection;
@@ -82,7 +81,7 @@ public class ScoreManager : MonoBehaviour
     //remove point when going backwards
     void RemoveCurrentSection()
     {
-        currentSection -= scoreGainedPerSection;
+        currentSection--;
     }
 
     void CalculateFinalScore()

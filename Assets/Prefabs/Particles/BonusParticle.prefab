@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7536878158595759318}
   - component: {fileID: 6730258184981141884}
   m_Layer: 0
-  m_Name: SmashParticle
+  m_Name: BonusParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -611,7 +611,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.5
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
