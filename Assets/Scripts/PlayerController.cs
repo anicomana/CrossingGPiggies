@@ -3,20 +3,20 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    GameManager gameManager;
-    GameObject gameManagerObject;
     public event System.Action OnEnemyCollision;
     public event System.Action<int> OnBonusCollision;
-    GameObject player;
-
-    public Vector3 playerInitialPos;
+    public ParticleSystem waterParticle;
+    public ParticleSystem smashParticle;
     public int stepSizeSide = 1;
     public int stepSizeXAxis = 2;
     public float moveSpeed = 15f;
     public float posThreshold = 0.001f;
-
     public int playerOutBoundSide = 5;
-    
+
+    private Vector3 playerInitialPos;
+    private GameObject player;
+    private GameManager gameManager;
+    private GameObject gameManagerObject;
     private Vector3 playerTargetPos;
     private bool playerMoving;
     private bool isGameOver;
@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
             gameManager = gameManagerObject.GetComponent<GameManager>();
             gameManager.OnGameOver += () => {isGameOver = true;};
         }
+
         playerInitialPos = transform.position;
         playerTargetPos = transform.position;
         isGameOver = false;
@@ -77,21 +78,28 @@ public class PlayerController : MonoBehaviour
  
     private void OnTriggerEnter(Collider other)
     {
+        //check what's colliding
         switch (other.gameObject.tag) {
             case "Enemy":
                 OnEnemyCollision?.Invoke();
+                waterParticle.Stop(); //THIS LINE DOES NOT WORK
+                smashParticle.Play(); //THIS LINE DOEN NOT WORK
                 break;
 
             case "Bonus":
                 BonusController bonus = other.GetComponent<BonusController>();
 
+                //invokes event and gives paramenter to whoever is listening (ScoreManager)
                 if(bonus != null) {
                     int bonusPointsValue = bonus.ReturnPointsValue();
                     OnBonusCollision?.Invoke(bonusPointsValue);
                 }
 
+                waterParticle.Stop(); //THIS LINE DOES NOT WORK
+                //Particle explosion gold
                 Destroy(other.gameObject);
                 break;
         }
     }
+    
 }

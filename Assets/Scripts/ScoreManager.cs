@@ -18,8 +18,8 @@ public class ScoreManager : MonoBehaviour
     private float currentSection;
     private float maxSectionReached;
     private int scoreGainedPerSection = 1;
-    private int minSectionsUntilBonus = 10;
-    private int maxSectionsUntilBonus = 20;
+    private int minSectionsUntilBonus = 5;
+    private int maxSectionsUntilBonus = 15;
     private int sectionsUntilNextBonus;
     private float bonusPoints;
     void Awake()

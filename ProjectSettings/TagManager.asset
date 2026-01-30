@@ -7,7 +7,7 @@ TagManager:
   - Ground
   - Enemy
   - StartingBase
-  - Coin
+  - Bonus
   layers:
   - Default
   - TransparentFX

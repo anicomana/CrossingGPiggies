@@ -21,6 +21,8 @@ public class ObstacleController : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.down * obstacleSpawnManager.obstacleSpeed * Time.deltaTime);
+        
+        //Particle soft gray
 
         if (transform.position.x < -obstacleSpawnManager.outBoundSide || transform.position.x > obstacleSpawnManager.outBoundSide) {
             Destroy(gameObject);

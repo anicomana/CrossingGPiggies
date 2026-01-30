@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     GameObject scoreManagerObject;
     public event System.Action OnGameOver;
     public int maxBackwardsSteps = 3;
+    private bool isGameOver;
 
     void Awake()
     {
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
             scoreManager = scoreManagerObject.GetComponent<ScoreManager>();
             scoreManager.MovedBackTooMuch += GameOver;
         }
+
+        isGameOver = false;
     }
     void Update()
     {
@@ -38,7 +41,10 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        OnGameOver?.Invoke();
-        Debug.Log("GAMEOVER");
+        if (isGameOver == false) {
+            isGameOver = true;
+            OnGameOver?.Invoke();
+            Debug.Log("GAMEOVER");
+        }
     }
 }
