@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float posThreshold = 0.001f;
     public int playerOutBoundSide = 5;
 
+    private Animator playerAnim;
     private Vector3 playerInitialPos;
     private GameObject player;
     private GameManager gameManager;
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
             gameManager = gameManagerObject.GetComponent<GameManager>();
             gameManager.OnGameOver += () => {isGameOver = true;};
         }
+
+        playerAnim = GetComponent<Animator>();
 
         playerInitialPos = transform.position;
         playerTargetPos = transform.position;
@@ -85,6 +88,7 @@ public class PlayerController : MonoBehaviour
                 OnEnemyCollision?.Invoke();
                 waterParticle.Stop();
                 smashParticle.Play();
+                //playerAnim.SetTrigger(); Death animation when dies
                 break;
 
             case "Bonus":
